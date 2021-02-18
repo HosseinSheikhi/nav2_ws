@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b19fd4d9-5648-40ae-8d6e-89f2862e4f47" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/image_segmentation/image_segmentation_subpub.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../custom_msg_srv/srv/ImageBatch.srv" beforeDir="false" afterPath="$PROJECT_DIR$/../custom_msg_srv/srv/ImageBatch.srv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../global_planner/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../global_planner/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../global_planner/include/global_planner/GlobalPlanner.h" beforeDir="false" afterPath="$PROJECT_DIR$/../global_planner/include/global_planner/GlobalPlanner.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../global_planner/include/global_planner/NF2.h" beforeDir="false" afterPath="$PROJECT_DIR$/../global_planner/include/global_planner/NF2.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../global_planner/src/GlobalPlanner.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../global_planner/src/GlobalPlanner.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../global_planner/src/NF2.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../global_planner/src/NF2.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_segmentation/image_segmentation_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_segmentation/image_segmentation_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_segmentation/image_segmentation_service_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_segmentation/image_segmentation_service_v2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_segmentation/predict.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_segmentation/predict.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../overhead_camera_service/include/overhead_camera_service/overhead_camera_node.h" beforeDir="false" afterPath="$PROJECT_DIR$/../overhead_camera_service/include/overhead_camera_service/overhead_camera_node.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../overhead_camera_service/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../overhead_camera_service/src/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../overhead_camera_service/src/overhead_camera_node.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../overhead_camera_service/src/overhead_camera_node.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../qt_ui/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../qt_ui/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../qt_ui/main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../qt_ui/mainwindow.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../qt_ui/mainwindow.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../qt_ui/mainwindow.ui" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user_interface/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../user_interface/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user_interface/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../user_interface/src/main.cpp" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="JupyterTrust" id="5a9923d4-d1eb-41a3-99e8-e9fdc151ab91" />
+  <component name="ProjectId" id="1lAF8xwP8BJr4ruwEltlRz3zFwi" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/image_segmentation/image_segmentation_service.py" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+  </component>
+  <component name="RunManager" selected="Python.service_v2">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="image_segmentation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="service" type="PythonConfigurationType" factoryName="Python">
+      <module name="image_segmentation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/bin/python3.8" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/image_segmentation" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/image_segmentation/image_segmentation_service.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="service_v2" type="PythonConfigurationType" factoryName="Python">
+      <module name="image_segmentation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/bin/python3.8" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/image_segmentation/image_segmentation_service_v2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.service" />
+      <item itemvalue="Python.service_v2" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b19fd4d9-5648-40ae-8d6e-89f2862e4f47" name="Default Changelist" comment="" />
+      <created>1607031832786</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1607031832786</updated>
+      <workItem from="1607031833873" duration="13221000" />
+      <workItem from="1607074798325" duration="1611000" />
+      <workItem from="1607285969767" duration="6938000" />
+      <workItem from="1607293444309" duration="599000" />
+      <workItem from="1607376544157" duration="1745000" />
+      <workItem from="1607379670602" duration="1575000" />
+      <workItem from="1607405832053" duration="1272000" />
+      <workItem from="1607494286799" duration="1379000" />
+      <workItem from="1607503608240" duration="308000" />
+      <workItem from="1607544257296" duration="5043000" />
+      <workItem from="1607585887413" duration="2874000" />
+      <workItem from="1607588930645" duration="503000" />
+      <workItem from="1607639717082" duration="9538000" />
+      <workItem from="1607744854684" duration="10000" />
+      <workItem from="1610153546458" duration="4788000" />
+      <workItem from="1610160153937" duration="4101000" />
+      <workItem from="1610224031772" duration="9264000" />
+      <workItem from="1610400997584" duration="19000" />
+      <workItem from="1610422022150" duration="21000" />
+      <workItem from="1611115222663" duration="4239000" />
+      <workItem from="1611270368311" duration="1727000" />
+      <workItem from="1611272961849" duration="605000" />
+      <workItem from="1611697708366" duration="27000" />
+      <workItem from="1611864135456" duration="24000" />
+      <workItem from="1611874454084" duration="77000" />
+      <workItem from="1612207338028" duration="636000" />
+      <workItem from="1613074853329" duration="4146000" />
+      <workItem from="1613082315167" duration="429000" />
+    </task>
+    <task id="LOCAL-00001" summary="add timer to image_segmentation_service_v2.py">
+      <created>1610237683674</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1610237683674</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add timer to image_segmentation_service_v2.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="add timer to image_segmentation_service_v2.py" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/image_segmentation$service_v2.coverage" NAME="service_v2 Coverage Results" MODIFIED="1611127596313" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/image_segmentation$service.coverage" NAME="service Coverage Results" MODIFIED="1611127365254" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/image_segmentation" />
+  </component>
+</project>
