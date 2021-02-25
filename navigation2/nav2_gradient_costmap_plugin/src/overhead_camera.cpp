@@ -4,10 +4,11 @@
 
 #include "nav2_gradient_costmap_plugin/overhead_camera.h"
 
-nav2_gradient_costmap_plugin::overhead_camera::overhead_camera::overhead_camera(double pose_x,
+nav2_gradient_costmap_plugin::overhead_camera::overhead_camera::overhead_camera(std::string name,
+                                                                                double pose_x,
                                                                                 double pose_y,
                                                                                 double pose_z):
-                                                                                pose_x_(pose_x), pose_y_(pose_y), pose_z_(pose_z)
+                                                                                name_(name), pose_x_(pose_x), pose_y_(pose_y), pose_z_(pose_z)
 {
   image_height_ = 480;
   image_width_ = 640;
@@ -16,19 +17,21 @@ nav2_gradient_costmap_plugin::overhead_camera::overhead_camera::overhead_camera(
   y_0_ = 240.5;
 }
 
-nav2_gradient_costmap_plugin::overhead_camera::overhead_camera::overhead_camera(double pose_x,
+nav2_gradient_costmap_plugin::overhead_camera::overhead_camera::overhead_camera(std::string name,
+                                                                                double pose_x,
                                                                                 double pose_y,
                                                                                 double pose_z,
                                                                                 unsigned int image_height,
                                                                                 unsigned int image_width):
-                                                                                pose_x_(pose_x), pose_y_(pose_y), pose_z_(pose_z),
+                                                                                name_(name), pose_x_(pose_x), pose_y_(pose_y), pose_z_(pose_z),
                                                                                 image_height_(image_height), image_width_(image_width)
 {
   focal_x_ = focal_y_ = 381.362;
   x_0_ = 320.5;
   y_0_ = 240.5;
 }
-nav2_gradient_costmap_plugin::overhead_camera::overhead_camera::overhead_camera(double pose_x,
+nav2_gradient_costmap_plugin::overhead_camera::overhead_camera::overhead_camera(std::string name,
+                                                                                double pose_x,
                                                                                 double pose_y,
                                                                                 double pose_z,
                                                                                 unsigned int image_height,
@@ -37,7 +40,7 @@ nav2_gradient_costmap_plugin::overhead_camera::overhead_camera::overhead_camera(
                                                                                 double focal_y,
                                                                                 double x_0,
                                                                                 double y_0):
-                                                                                pose_x_(pose_x), pose_y_(pose_y), pose_z_(pose_z),
+                                                                                name_(name), pose_x_(pose_x), pose_y_(pose_y), pose_z_(pose_z),
                                                                                 image_height_(image_height), image_width_(image_width),
                                                                                 focal_x_(focal_x),
                                                                                 focal_y_(focal_y),
@@ -79,15 +82,17 @@ nav2_gradient_costmap_plugin::overhead_camera::overhead_camera::image_cb(sensor_
   cv_bridge::CvImagePtr cv_image_ptr = cv_bridge::toCvCopy(image);
   segmented_image_ = cv_image_ptr->image;
   cv::resize(segmented_image_, segmented_image_, cv::Size(image_width_,image_height_));
-//  cv::imshow("segmented image", segmented_image_);
+//  cv::imshow(name_, segmented_image_);
 //  cv::waitKey(1);
+//  std::cout<<"image received"<<std::endl;
   update_ = true; // instance is update when image is being subscribed
+
 }
 
 bool nav2_gradient_costmap_plugin::overhead_camera::overhead_camera::isGridFree(unsigned int x_pixel, unsigned int y_pixel){
   int white_pixels_counter{0};
-  for(int i = std::max(static_cast<int>(x_pixel)-5, 0); i<std::min(static_cast<int>(x_pixel)+5,static_cast<int>(image_width_)); i++)
-    for(int j = std::max(static_cast<int>(y_pixel)-5, 0); j<std::min(static_cast<int>(y_pixel)+5,static_cast<int>(image_height_)); j++)
+  for(int i = std::max(static_cast<int>(x_pixel)-5, 0); i<std::min(static_cast<int>(x_pixel)+5,static_cast<int>(image_width_)-1); i++)
+    for(int j = std::max(static_cast<int>(y_pixel)-5, 0); j<std::min(static_cast<int>(y_pixel)+5,static_cast<int>(image_height_)-1); j++)
       if(int(segmented_image_.at<float>(j,i))>128) {
         white_pixels_counter++;
       }

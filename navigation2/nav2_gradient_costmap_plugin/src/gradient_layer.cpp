@@ -44,8 +44,9 @@
 
 #include "nav2_costmap_2d/costmap_math.hpp"
 #include "nav2_costmap_2d/footprint.hpp"
+#include "nav2_costmap_2d/array_parser.hpp"
 #include "rclcpp/parameter_events_filter.hpp"
-
+#include "string"
 using nav2_costmap_2d::LETHAL_OBSTACLE;
 using nav2_costmap_2d::INSCRIBED_INFLATED_OBSTACLE;
 using nav2_costmap_2d::NO_INFORMATION;
@@ -64,61 +65,78 @@ GradientLayer::GradientLayer()
 void
 GradientLayer::onInitialize()
 {
+  declareParameter("enabled", rclcpp::ParameterValue(true));
+  declareParameter("num_overhead_cameras", rclcpp::ParameterValue(0));
+  declareParameter("overhead_topics", rclcpp::ParameterValue(overhead_topics_));
+  declareParameter("camera_poses", rclcpp::ParameterValue(""));
+
+
   getParameters();
   matchSize();
 
-  overhead_camera_1_ = std::make_shared<overhead_camera::overhead_camera>(cam1_x_,cam1_y_,cam1_z_);
-  overhead_camera_2_ = std::make_shared<overhead_camera::overhead_camera>(cam2_x_,cam2_y_,cam2_z_);
+  for(int cam_index = 0; cam_index<num_overhead_cameras_; cam_index++) {
+    overhead_cameras_.emplace_back(
+        std::make_shared<overhead_camera::overhead_camera>(
+            "cam " + std::to_string(cam_index + 1), camera_poses_[cam_index][0],
+            camera_poses_[cam_index][1], camera_poses_[cam_index][2]));
 
-  cam_sub_1_ = node_->create_subscription<sensor_msgs::msg::Image>(cam1_topic_, rclcpp::SystemDefaultsQoS(),
-                                                                   std::bind(&overhead_camera::overhead_camera::image_cb, overhead_camera_1_, std::placeholders::_1));
-  cam_sub_2_ = node_->create_subscription<sensor_msgs::msg::Image>(cam2_topic_, rclcpp::SystemDefaultsQoS(),
-                                                                   std::bind(&overhead_camera::overhead_camera::image_cb, overhead_camera_2_, std::placeholders::_1));
+    camera_subs_.emplace_back(
+        node_->create_subscription<sensor_msgs::msg::Image>(
+            overhead_topics_[cam_index], rclcpp::SystemDefaultsQoS(),
+            std::bind(&overhead_camera::overhead_camera::image_cb,
+                      overhead_cameras_[cam_index], std::placeholders::_1)));
+  }
   calDesiredSize();
-  RCLCPP_INFO(node_->get_logger(), "subscribing to %s \n %s", cam1_topic_.c_str(), cam2_topic_.c_str());
+
+  RCLCPP_INFO(node_->get_logger(), "GradientLayer: on init");
 }
 
 void GradientLayer::getParameters() {
-  declareParameter("enabled", rclcpp::ParameterValue(true));
-  declareParameter("cam1_topic", rclcpp::ParameterValue(""));
-  declareParameter("cam2_topic", rclcpp::ParameterValue(""));
-  declareParameter("cam1_x", rclcpp::ParameterValue(0.0));
-  declareParameter("cam1_y", rclcpp::ParameterValue(0.0));
-  declareParameter("cam1_z", rclcpp::ParameterValue(0.0));
-  declareParameter("cam2_x", rclcpp::ParameterValue(0.0));
-  declareParameter("cam2_y", rclcpp::ParameterValue(0.0));
-  declareParameter("cam2_z", rclcpp::ParameterValue(0.0));
 
   node_->get_parameter(name_ + "." + "enabled", enabled_);
-  node_->get_parameter(name_ + "." + "cam1_topic", cam1_topic_);
-  node_->get_parameter(name_ + "." + "cam2_topic", cam2_topic_);
+  node_->get_parameter(name_ + "." + "num_overhead_cameras", num_overhead_cameras_);
+  node_->get_parameter(name_ + "." + "overhead_topics", overhead_topics_);
 
-  node_->get_parameter(name_+ "." + "cam1_x",cam1_x_);
-  node_->get_parameter(name_+ "." + "cam1_y",cam1_y_);
-  node_->get_parameter(name_+ "." + "cam1_z",cam1_z_);
-  node_->get_parameter(name_+ "." + "cam2_x",cam2_x_);
-  node_->get_parameter(name_+ "." + "cam2_y",cam2_y_);
-  node_->get_parameter(name_+ "." + "cam2_z",cam2_z_);
+  if(overhead_topics_.size() != static_cast<unsigned long>(num_overhead_cameras_))
+    RCLCPP_WARN(node_->get_logger(), "GradientLayer: number of overhead cameras doesn't match with overhead topics");
+
+
+  std::string camera_poses_str;
+  node_->get_parameter(name_ + "." + "camera_poses", camera_poses_str);
+  std::string error;
+  camera_poses_ = nav2_costmap_2d::parseVVF(camera_poses_str, error);
+  if (!error.empty())
+    RCLCPP_WARN(node_->get_logger(), "GradientLayer: error in parsing camera poses %s", error.c_str());
+  if(camera_poses_.size() != static_cast<unsigned long>(num_overhead_cameras_))
+    RCLCPP_WARN(node_->get_logger(), "GradientLayer: number of overhead cameras doesn't match with cameras positions");
 
 }
 
 void nav2_gradient_costmap_plugin::GradientLayer::calDesiredSize() {
+  std::vector<std::vector<double>> FOVBoxes;
   double x1_min, y1_min, x1_max, y1_max;
-  double x2_min, y2_min, x2_max, y2_max;
-  overhead_camera_1_->worldFOV(x1_min, y1_min, x1_max, y1_max);
-  overhead_camera_2_->worldFOV(x2_min, y2_min, x2_max, y2_max);
 
-  double x_union_min = fmin(x1_min,x2_min);
+
+  overhead_cameras_[0]->worldFOV(x1_min, y1_min, x1_max, y1_max);
+  FOVBoxes.push_back(std::vector<double>{x1_min, y1_min, x1_max,y1_max});
+  overhead_cameras_[1]->worldFOV(x1_min, y1_min, x1_max, y1_max);
+  FOVBoxes.push_back(std::vector<double>{x1_min, y1_min, x1_max,y1_max});
+  overhead_cameras_[2]->worldFOV(x1_min, y1_min, x1_max, y1_max);
+  FOVBoxes.push_back(std::vector<double>{x1_min, y1_min, x1_max,y1_max});
+
+
+  double x_union_min = boxMin(FOVBoxes, 0);
   x_union_min = fmin(x_union_min, static_cast<double>(getOriginX()));
-  double y_union_min = fmin(y1_min, y2_min);
+
+  double y_union_min = boxMin(FOVBoxes, 1);
   y_union_min = fmin(y_union_min, static_cast<double>(getOriginY()));
 
   //TODO must be implemented as upper block but is not possible without changing origin
-  double x_union_max = fmax(x1_max, x2_max);
-  double y_union_max = fmax(y1_max, y2_max);
-
+  double x_union_max = boxMax(FOVBoxes, 2);
+  double y_union_max = boxMax(FOVBoxes, 3);
   ceiling_size_x_ = static_cast<unsigned int>(fabs(x_union_max - x_union_min)/resolution_);
   ceiling_size_y_ = static_cast<unsigned int>(fabs(y_union_max - y_union_min)/resolution_);
+  RCLCPP_INFO(node_->get_logger(), "desired size %u X %u", ceiling_size_x_, ceiling_size_y_);
 
 }
 
@@ -173,26 +191,48 @@ GradientLayer::updateCosts(
   int max_i,
   int max_j)
 {
-  if(overhead_camera_1_->isUpdate()){
+
+
+
+  if(overhead_cameras_[0]->isUpdate() && overhead_cameras_[1]->isUpdate(), overhead_cameras_[2]->isUpdate()){
     for(unsigned int j=0; j<size_y_; j++){
       for(unsigned int i=0; i<size_x_; i++){
         double wx, wy;
         mapToWorld(i, j, wx, wy);
-        if(overhead_camera_1_->coverWorld(wx, wy)){
+        if(overhead_cameras_[0]->coverWorld(wx, wy)){
           unsigned int px, py;
-          if(overhead_camera_1_->worldToPixel(wx, wy, px, py)){
-            auto isFree = overhead_camera_1_->isGridFree(px, py);
+          if(overhead_cameras_[0]->worldToPixel(wx, wy, px, py)){
+            auto isFree = overhead_cameras_[0]->isGridFree(px, py);
             costmap_[master_grid.getIndex(i,j)] = (isFree ? FREE_SPACE : LETHAL_OBSTACLE);
           }else{
             RCLCPP_WARN(node_->get_logger(), "GradientLayer: worldToPixel was not successful");
           }
-        }else{
+        } else if(overhead_cameras_[1]->coverWorld(wx, wy)){
+          unsigned int px, py;
+          if(overhead_cameras_[1]->worldToPixel(wx, wy, px, py)){
+            auto isFree = overhead_cameras_[1]->isGridFree(px, py);
+            costmap_[master_grid.getIndex(i,j)] = (isFree ? FREE_SPACE : LETHAL_OBSTACLE);
+          }else{
+            RCLCPP_WARN(node_->get_logger(), "GradientLayer: worldToPixel was not successful");
+          }
+        } else if(overhead_cameras_[2]->coverWorld(wx, wy)){
+          unsigned int px, py;
+          if(overhead_cameras_[2]->worldToPixel(wx, wy, px, py)){
+            auto isFree = overhead_cameras_[2]->isGridFree(px, py);
+            costmap_[master_grid.getIndex(i,j)] = (isFree ? FREE_SPACE : LETHAL_OBSTACLE);
+          }else{
+            RCLCPP_WARN(node_->get_logger(), "GradientLayer: worldToPixel was not successful");
+          }
+        }
+        else{
           costmap_[master_grid.getIndex(i,j)] = NO_INFORMATION;
         }
       }
     }
 
-    overhead_camera_1_->setUpdate(false);
+    overhead_cameras_[0]->setUpdate(false);
+    overhead_cameras_[1]->setUpdate(false);
+    overhead_cameras_[2]->setUpdate(false);
     unsigned int index = 0;
     unsigned char * master_ = master_grid.getCharMap();
     // initialize the costmap with static data
@@ -204,9 +244,34 @@ GradientLayer::updateCosts(
       }
     }
   }
-  //updateWithOverwrite(master_grid, 0,0,size_x_, size_y_);
 
-
+//  if(!update_) {
+//  RCLCPP_INFO(node_->get_logger(), "Cost update was false");
+//  return;
+//  }
+//
+//  unsigned char *master_ = master_grid.getCharMap();
+//
+//
+//  for (int cam_index = 0; cam_index < num_overhead_cameras_; cam_index++) {
+//    if (overhead_camera_instances_[cam_index]->isUpdate()) {
+//      for(unsigned int x_pixel =0; x_pixel <640; x_pixel++){
+//        for(unsigned int y_pixel =0; y_pixel <480; y_pixel++){
+//          double x_world, y_world;
+//          if(overhead_camera_instances_[cam_index]->pixelToWorld(
+//                  x_pixel, y_pixel,x_world, y_world)){
+//            auto isFree = overhead_camera_instances_[cam_index]->isGridFree(x_pixel, y_pixel);
+//            unsigned int x_map, y_map;
+//            worldToMap(x_world, y_world, x_map, y_map);
+//            master_[master_grid.getIndex(x_map, y_map)] = (isFree ? FREE_SPACE : LETHAL_OBSTACLE);
+//          } else{
+//            RCLCPP_WARN(node_->get_logger(), "GradientLayer: pixelToWorld was not successful");
+//          }
+//        }
+//      }
+//      overhead_camera_instances_[cam_index]->setUpdate(false);
+//    }
+//  }
 
 }
 

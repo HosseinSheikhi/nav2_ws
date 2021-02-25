@@ -55,7 +55,7 @@
 #include "cv_bridge/cv_bridge.h"
 #include "overhead_camera.h"
 #include "memory.h"
-
+#include <algorithm>
 namespace nav2_gradient_costmap_plugin
 {
 
@@ -83,21 +83,47 @@ public:
   virtual bool isClearable() {return false;}
 
 private:
+  bool update_{ false};
   unsigned int ceiling_size_x_, ceiling_size_y_; /// desired size of x and y in meter based on ceiling cameras coverage, must divid by resolution, I think I should not change the resolution in this plugin
+//  std::shared_ptr<overhead_camera::overhead_camera> overhead_camera_1_;
+//  std::shared_ptr<overhead_camera::overhead_camera> overhead_camera_2_;
+//  std::shared_ptr<overhead_camera::overhead_camera> overhead_camera_3_;
+  std::vector<std::shared_ptr<overhead_camera::overhead_camera>> overhead_cameras_;
 
+//  rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr cam_sub_1_;
+//  rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr cam_sub_2_;
+//  rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr cam_sub_3_;
+  std::vector<rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr> camera_subs_;
+  double boxMin(std::vector<std::vector<double>> box, int index){
+    /*
+     * index shows which index of std::vector<double> have to be search to find the min
+     * if index=0 will return the minimum x_min
+     */
+    std::vector<double> temp;
+    for(auto const vec : box)
+      temp.push_back(vec[index]);
 
-  std::shared_ptr<overhead_camera::overhead_camera> overhead_camera_1_;
-  std::shared_ptr<overhead_camera::overhead_camera> overhead_camera_2_;
+    return *std::min_element(temp.begin(), temp.end());
+  }
 
-  rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr cam_sub_1_;
-  rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr cam_sub_2_;
+  double boxMax(std::vector<std::vector<double>> box, int index){
+    /*
+     * index shows which index of std::vector<double> have to be search to find the max
+     * if index=0 will return the max x_min
+     */
+    std::vector<double> temp;
+    for(auto const vec : box)
+      temp.push_back(vec[index]);
+
+    return *std::max_element(temp.begin(), temp.end());
+  }
 
   void calDesiredSize();
   //parameters
   void getParameters();
-  std::string cam1_topic_;
-  std::string cam2_topic_;
-  double cam1_x_, cam1_y_, cam1_z_, cam2_x_, cam2_y_, cam2_z_;
+  int num_overhead_cameras_;
+  std::vector<std::vector<float>> camera_poses_;
+  std::vector<std::string> overhead_topics_;
 
 };
 

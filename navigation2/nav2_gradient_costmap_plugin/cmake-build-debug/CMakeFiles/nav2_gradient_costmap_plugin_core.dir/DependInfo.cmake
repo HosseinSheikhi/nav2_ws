@@ -23,7 +23,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/home/hossein/nav2_ws/install/nav2_costmap_2d/include"
   "/home/hossein/nav2_ws/install/nav2_voxel_grid/include"
   "/home/hossein/nav2_ws/install/nav2_util/include"
-  "/home/hossein/dev_ws/install/custom_msg_srv/include"
+  "/home/hossein/nav2_ws/install/custom_msg_srv/include"
   "/opt/ros/foxy/include"
   "/home/hossein/nav2_ws/install/nav2_msgs/include"
   "/usr/include/eigen3"

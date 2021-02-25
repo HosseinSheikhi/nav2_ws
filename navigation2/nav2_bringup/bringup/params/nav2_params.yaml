@@ -227,14 +227,9 @@ global_costmap:
       gradient_layer:
         plugin: "nav2_gradient_costmap_plugin::GradientLayer"
         enabled: True
-        cam1_x: -1.0
-        cam1_y: -3.0
-        cam1_z: 4.0
-        cam2_x: 5.0
-        cam2_y: -3.0
-        cam2_z: 4.0
-        cam1_topic: "/autonomous_robot/image_segmentation/image_1"
-        cam2_topic: "/autonomous_robot/image_segmentation/image_2"
+        num_overhead_cameras: 3
+        overhead_topics: ["/autonomous_robot/image_segmentation/image_1", "/autonomous_robot/image_segmentation/image_2", "/autonomous_robot/image_segmentation/image_3"]
+        camera_poses : "[[-1.0, -3.0, 4.0],[5.0, -3.0, 4.0], [11.0, -3.0, 4.0]]"
 
       always_send_full_costmap: True
   global_costmap_client:

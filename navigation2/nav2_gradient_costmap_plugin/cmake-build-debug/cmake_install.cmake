@@ -49,7 +49,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libnav2_gradient_costmap_plugin_core.so")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libnav2_gradient_costmap_plugin_core.so"
-         OLD_RPATH "/home/hossein/dev_ws/install/custom_msg_srv/lib:/home/hossein/nav2_ws/install/nav2_costmap_2d/lib:/home/hossein/nav2_ws/install/nav2_util/lib:/home/hossein/nav2_ws/install/nav2_msgs/lib:/home/hossein/nav2_ws/install/nav2_voxel_grid/lib:/opt/ros/foxy/lib:/usr/local/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:"
+         OLD_RPATH "/home/hossein/nav2_ws/install/custom_msg_srv/lib:/home/hossein/nav2_ws/install/nav2_costmap_2d/lib:/home/hossein/nav2_ws/install/nav2_util/lib:/home/hossein/nav2_ws/install/nav2_msgs/lib:/home/hossein/nav2_ws/install/nav2_voxel_grid/lib:/opt/ros/foxy/lib:/usr/local/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libnav2_gradient_costmap_plugin_core.so")
