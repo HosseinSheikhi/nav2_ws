@@ -85,14 +85,10 @@ public:
 private:
   bool update_{ false};
   unsigned int ceiling_size_x_, ceiling_size_y_; /// desired size of x and y in meter based on ceiling cameras coverage, must divid by resolution, I think I should not change the resolution in this plugin
-//  std::shared_ptr<overhead_camera::overhead_camera> overhead_camera_1_;
-//  std::shared_ptr<overhead_camera::overhead_camera> overhead_camera_2_;
-//  std::shared_ptr<overhead_camera::overhead_camera> overhead_camera_3_;
+
   std::vector<std::shared_ptr<overhead_camera::overhead_camera>> overhead_cameras_;
 
-//  rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr cam_sub_1_;
-//  rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr cam_sub_2_;
-//  rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr cam_sub_3_;
+
   std::vector<rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr> camera_subs_;
   double boxMin(std::vector<std::vector<double>> box, int index){
     /*

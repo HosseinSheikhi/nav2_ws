@@ -380,13 +380,12 @@ StaticLayer::updateCosts(
   if (!layered_costmap_->isRolling()) {
 
     // if not rolling, the layered costmap (master_grid) has same coordinates as this layer
-//    if (!use_maximum_) {
-//      updateWithTrueOverwrite(master_grid, min_i, min_j, max_i, max_j);
-//    } else {
-//      updateWithMax(master_grid, min_i, min_j, max_i, max_j);
-//    }
-    RCLCPP_INFO(node_->get_logger(), "StaticLayer: updateWithOverwrite ");
-    updateWithOverwrite(master_grid, min_i, min_j, max_i, max_j);
+    if (!use_maximum_) {
+      updateWithTrueOverwrite(master_grid, min_i, min_j, max_i, max_j);
+    } else {
+      updateWithMax(master_grid, min_i, min_j, max_i, max_j);
+    }
+
   } else {
     // If rolling window, the master_grid is unlikely to have same coordinates as this layer
     unsigned int mx, my;

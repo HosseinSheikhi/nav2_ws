@@ -91,13 +91,15 @@ nav2_gradient_costmap_plugin::overhead_camera::overhead_camera::image_cb(sensor_
 
 bool nav2_gradient_costmap_plugin::overhead_camera::overhead_camera::isGridFree(unsigned int x_pixel, unsigned int y_pixel){
   int white_pixels_counter{0};
-  for(int i = std::max(static_cast<int>(x_pixel)-5, 0); i<std::min(static_cast<int>(x_pixel)+5,static_cast<int>(image_width_)-1); i++)
-    for(int j = std::max(static_cast<int>(y_pixel)-5, 0); j<std::min(static_cast<int>(y_pixel)+5,static_cast<int>(image_height_)-1); j++)
+  // TODO used to check a neighbour hood of given pixel but seems leads to error and have no fucking idea why!
+  for(unsigned int i = static_cast<unsigned int>(std::max(static_cast<int>(x_pixel), 0)); i<= static_cast<unsigned int>(std::min(static_cast<int>(x_pixel),static_cast<int>(image_width_)-1)); i++)
+    for(unsigned int j = static_cast<unsigned int>(std::max(static_cast<int>(y_pixel), 0)); j<= static_cast<unsigned int>(std::min(static_cast<int>(y_pixel),static_cast<int>(image_height_)-1)); j++)
       if(int(segmented_image_.at<float>(j,i))>128) {
         white_pixels_counter++;
       }
 
-  return (white_pixels_counter < 5);
+  return (white_pixels_counter == 0);
+
 }
 
 void nav2_gradient_costmap_plugin::overhead_camera::overhead_camera::worldFOV(double &min_x,

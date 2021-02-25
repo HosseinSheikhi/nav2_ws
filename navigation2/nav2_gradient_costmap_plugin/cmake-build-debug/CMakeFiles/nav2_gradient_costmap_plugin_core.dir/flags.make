@@ -6,5 +6,5 @@ CXX_FLAGS = -g -fPIC   -Wall -Wextra -Wpedantic -std=gnu++14
 
 CXX_DEFINES = -DDEFAULT_RMW_IMPLEMENTATION=rmw_fastrtps_cpp -DRCUTILS_ENABLE_FAULT_INJECTION -DSPDLOG_COMPILED_LIB -Dnav2_gradient_costmap_plugin_core_EXPORTS
 
-CXX_INCLUDES = -I/home/hossein/nav2_ws/src/navigation2/nav2_gradient_costmap_plugin/include -I/home/hossein/nav2_ws/install/nav2_costmap_2d/include -I/home/hossein/nav2_ws/install/nav2_voxel_grid/include -I/home/hossein/nav2_ws/install/nav2_util/include -isystem /home/hossein/nav2_ws/install/custom_msg_srv/include -isystem /opt/ros/foxy/include -isystem /home/hossein/nav2_ws/install/nav2_msgs/include -isystem /usr/include/eigen3 -isystem /usr/local/include/opencv4 
+CXX_INCLUDES = -I/home/hossein/nav2_ws/src/navigation2/nav2_gradient_costmap_plugin/include -I/home/hossein/nav2_ws/install/nav2_costmap_2d/include -I/home/hossein/nav2_ws/install/nav2_voxel_grid/include -I/home/hossein/nav2_ws/install/nav2_util/include -isystem /home/hossein/dev_ws/install/custom_msg_srv/include -isystem /opt/ros/foxy/include -isystem /home/hossein/nav2_ws/install/nav2_msgs/include -isystem /usr/include/eigen3 -isystem /usr/local/include/opencv4 
 
